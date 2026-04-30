@@ -1,0 +1,30 @@
+task: cd
+dataset: whu
+
+data:
+  root_dir: data/whu-cd
+  img_size: 256
+
+model:
+  pretrained: aid_10k   # key from noise2map/model.py _WEIGHT_REGISTRY
+  out_channels: 2
+  freeze_unet: false
+
+training:
+  batch_size: 8
+  num_epochs: 500
+  lr: 1e-4
+  grad_accumulation_steps: 2
+  num_workers: 4
+  val_period: 1
+  # WHU-CD has balanced labels — equal weighting works best
+  change_weight: 1.0
+  no_change_weight: 1.0
+
+output:
+  checkpoint_dir: checkpoints/whu_cd
+
+logging:
+  write_to_wandb: false
+  wandb_project: noise2map
+  run_name: whu_cd

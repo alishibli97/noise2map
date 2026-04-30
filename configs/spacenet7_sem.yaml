@@ -1,0 +1,31 @@
+task: sem
+dataset: spacenet7
+
+data:
+  root_dir: data/spacenet7
+  img_size: 256
+  domain_shift: true
+
+model:
+  pretrained: aid_10k
+  out_channels: 2
+  freeze_unet: false
+
+training:
+  batch_size: 8
+  num_epochs: 200
+  lr: 1e-4
+  grad_accumulation_steps: 2
+  num_workers: 4
+  val_period: 5
+  # SpaceNet7 buildings are sparse (~7.5% of pixels)
+  change_weight: 5.0
+  no_change_weight: 1.0
+
+output:
+  checkpoint_dir: checkpoints/spacenet7_sem
+
+logging:
+  write_to_wandb: false
+  wandb_project: noise2map
+  run_name: spacenet7_sem

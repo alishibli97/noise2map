@@ -1,0 +1,30 @@
+task: sem
+dataset: whu
+
+data:
+  root_dir: data/WHU
+  img_size: 256
+
+model:
+  pretrained: aid_10k
+  out_channels: 2
+  freeze_unet: false
+
+training:
+  batch_size: 8
+  num_epochs: 200
+  lr: 1e-4
+  grad_accumulation_steps: 2
+  num_workers: 4
+  val_period: 5
+  # Building class is sparse — upweight it
+  change_weight: 10.0
+  no_change_weight: 1.0
+
+output:
+  checkpoint_dir: checkpoints/whu_sem
+
+logging:
+  write_to_wandb: false
+  wandb_project: noise2map
+  run_name: whu_sem
